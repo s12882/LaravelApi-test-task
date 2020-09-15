@@ -2,10 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * Class User
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @mixin Model
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use Notifiable;
