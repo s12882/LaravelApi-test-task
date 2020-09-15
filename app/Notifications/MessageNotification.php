@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Notifications;
+
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -42,6 +44,8 @@ class MessageNotification extends Notification
     {
         return (new MailMessage)
             ->subject('Thank you for your message')
-            ->line(__('Your message was :message', ['message' => $this->message]));
+            ->line(__('Your message was :message', [
+                'message' => $this->message
+            ]));
     }
 }

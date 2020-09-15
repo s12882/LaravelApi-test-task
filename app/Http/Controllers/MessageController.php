@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+use App\Mail\NewMessageNotification;
 use App\Models\Message;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\SendRequest;
-use MessageNotification;
 
 class MessageController
 {
@@ -24,9 +23,12 @@ class MessageController
         );
 
         if ($message->save()) {
-            Notification::send(Admin::all(), new MessageNotification($request->get('message')));
+            Mail::to(config('mail.to.address'))
+                ->send(new NewMessageNotification($message));
 
-            return response()->json(['success' => true, 'text' => $message->text], 201);
+            return response()->json([
+                'success' => true, 'text' => $message->text
+            ], 201);
         }
 
         return response()->json(['success' => false], 200);
